@@ -1,7 +1,6 @@
 package org.example.data;
 
-import java.io.BufferedWriter;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -14,16 +13,37 @@ public class ClippingsLoader {
     public static final ClippingsLoader INSTANCE = new ClippingsLoader();
     private List<String> loadedFile;
     private Map<String, List<KindleNote>> booksNotes;
-    public static final String UTF8_BOM = "\uFEFF";
+    private final String UTF8_BOM = "\uFEFF";
 
     private ClippingsLoader() {
         loadedFile = new ArrayList<>();
         booksNotes = new HashMap<>();
     }
 
-    public void loadClippings(List<String> notesList) {
+    /**
+     * Load clippings from file represented as a string list
+     * @param notesList
+     */
+    public void loadFromList(List<String> notesList) {
         loadedFile = notesList;
         extractNotes();
+    }
+
+    /**
+     * Load clipping from file
+     */
+    public void loadFromFile(File file) {
+        List<String> result = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            while (br.ready()) {
+                result.add(br.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        loadedFile = result;
     }
 
     /**
@@ -81,7 +101,7 @@ public class ClippingsLoader {
      * Removes BOM character from the text beginning
      */
 
-    private static String removeUTF8BOM(String s) {
+    private String removeUTF8BOM(String s) {
         if (s.startsWith(UTF8_BOM)) {
             s = s.replace(UTF8_BOM,"");
         }
