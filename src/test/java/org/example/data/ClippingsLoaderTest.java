@@ -2,9 +2,7 @@ package org.example.data;
 
 import junit.framework.TestCase;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import java.io.*;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +24,13 @@ public class ClippingsLoaderTest extends TestCase {
         try {
             clippingsLoader.loadFromFile(testFile);
         } catch (FileNotFoundException e) {
+            fail();
+        }
+
+        try {
+            clippingsLoader.loadFromFile(testFalseFile);
+            fail();
+        } catch (FileNotFoundException e) {
             e.printStackTrace();
         }
 
@@ -36,6 +41,20 @@ public class ClippingsLoaderTest extends TestCase {
         List<String> result = new ArrayList<>();
         try {
             result = Files.readAllLines(path);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return result;
+    }
+
+    private List<String> loadListFromFile(File file) {
+        List<String> result = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
+            while (br.ready()) {
+                result.add(br.readLine());
+            }
         } catch (IOException e) {
             e.printStackTrace();
         }

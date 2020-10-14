@@ -39,6 +39,30 @@ public class ClippingsLoader {
         extractNotes();
     }
 
+    public List<String> getBooksTitles() {
+        return new ArrayList<>(booksNotes.keySet());
+    }
+
+    public List<KindleNote> getnNotes(String title) {
+        return booksNotes.get(title);
+    }
+
+    public void saveNotes(String title) {
+        Path file = Paths.get(title.concat(".txt"));
+
+        try(BufferedWriter bw = Files.newBufferedWriter(file)) {
+            bw.write(title.concat("\n"));
+            bw.write(booksNotes.get(title).get(0).getAuthor().concat("\n"));
+
+            for (KindleNote s : booksNotes.get(title)) {
+                bw.write(s.getInfo().concat("\n"));
+                bw.write(s.getNote().concat("\n\n"));
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
+    }
+
     /**
      * Validates the file provided by user
      */
@@ -121,29 +145,5 @@ public class ClippingsLoader {
             s = s.replace(UTF8_BOM,"");
         }
         return s;
-    }
-
-    public List<String> returnBooksTitles() {
-        return new ArrayList<>(booksNotes.keySet());
-    }
-
-    public List<KindleNote> returnNotes(String title) {
-        return booksNotes.get(title);
-    }
-
-    public void saveNotes(String title) {
-        Path file = Paths.get(title.concat(".txt"));
-
-        try(BufferedWriter bw = Files.newBufferedWriter(file)) {
-            bw.write(title.concat("\n"));
-            bw.write(booksNotes.get(title).get(0).getAuthor().concat("\n"));
-
-            for (KindleNote s : booksNotes.get(title)) {
-                bw.write(s.getInfo().concat("\n"));
-                bw.write(s.getNote().concat("\n\n"));
-            }
-        } catch (IOException e) {
-            System.err.println(e.getMessage());
-        }
     }
 }
