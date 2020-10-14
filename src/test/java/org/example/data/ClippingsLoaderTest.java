@@ -3,37 +3,43 @@ package org.example.data;
 import junit.framework.TestCase;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 
 public class ClippingsLoaderTest extends TestCase {
     File testFile;
-    List<String> testList;
+    File testFalseFile;
     ClippingsLoader clippingsLoader;
-
 
     public void setUp(){
         clippingsLoader = ClippingsLoader.INSTANCE;
-        Path path = Paths.get("src/test/resources/Test Clippings.txt");
-        loadFromPath(path);
-    }
-
-    public void testLoadFromList() {
-        clippingsLoader.loadFromList(testList);
+        testFile = new File(getClass().getClassLoader().getResource("Test-clippings.txt").getFile());
+        testFalseFile = new File(getClass().getClassLoader().getResource("Test-false-clippings.txt").getFile());
     }
 
     public void testLoadFromFile() {
+        try {
+            clippingsLoader.loadFromFile(testFile);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+
+
     }
 
-    private void loadFromPath(Path path) {
-
+    private List<String> loadListFromPath(Path path) {
+        List<String> result = new ArrayList<>();
         try {
-            testList = Files.readAllLines(path);
+            result = Files.readAllLines(path);
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        return result;
     }
 }

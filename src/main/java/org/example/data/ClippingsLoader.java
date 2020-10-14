@@ -21,18 +21,10 @@ public class ClippingsLoader {
     }
 
     /**
-     * Load clippings from file represented as a string list
-     * @param notesList
-     */
-    public void loadFromList(List<String> notesList) {
-        loadedFile = notesList;
-        extractNotes();
-    }
-
-    /**
      * Load clipping from file
      */
-    public void loadFromFile(File file) {
+    public void loadFromFile(File file) throws FileNotFoundException {
+        validateUserInput(file);
         List<String> result = new ArrayList<>();
 
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -44,6 +36,29 @@ public class ClippingsLoader {
         }
 
         loadedFile = result;
+        extractNotes();
+    }
+
+    /**
+     * Validates the file provided by user
+     */
+    private void validateUserInput(File userFile) throws FileNotFoundException{
+        List<String> result = new ArrayList<>();
+
+        try (BufferedReader br = new BufferedReader(new FileReader(userFile))) {
+            while (br.ready()) {
+                result.add(br.readLine());
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        // Testing file
+        if(result.size() < 5) throw new FileNotFoundException();
+        for (String line: result) {
+            if(line.equals("==========")) return;
+        }
+        throw new FileNotFoundException();
     }
 
     /**
