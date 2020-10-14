@@ -31,9 +31,7 @@ public class ClippingsLoaderTest extends TestCase {
             clippingsLoader.loadFromFile(testFalseFile);
             fail();
         } catch (FileNotFoundException e) {
-            e.printStackTrace();
         }
-
 
     }
 
