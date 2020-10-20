@@ -11,32 +11,20 @@ import java.util.Map;
 
 public class ClippingsLoader {
     public static final ClippingsLoader INSTANCE = new ClippingsLoader();
-    private List<String> loadedFile;
     private Map<String, List<KindleNote>> booksNotes;
     private final String UTF8_BOM = "\uFEFF";
 
     private ClippingsLoader() {
-        loadedFile = new ArrayList<>();
         booksNotes = new HashMap<>();
     }
 
     /**
      * Load clipping from file
      */
-    public void loadFromFile(File file) throws FileNotFoundException {
-        validateUserInput(file);
-        List<String> result = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
-            while (br.ready()) {
-                result.add(br.readLine());
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        loadedFile = result;
-        extractNotes();
+    public void loadClippingsFromFile(File file) throws FileNotFoundException {
+        List<String> loadedArray = loadArrayFromFile(file);
+        validateUserInput(loadedArray);
+        convertArrayToKindleNotes(loadedArray);
     }
 
     public List<String> getBooksTitles() {
@@ -63,23 +51,24 @@ public class ClippingsLoader {
         }
     }
 
-    /**
-     * Validates the file provided by user
-     */
-    private void validateUserInput(File userFile) throws FileNotFoundException{
+    private List<String> loadArrayFromFile(File file) {
         List<String> result = new ArrayList<>();
-
-        try (BufferedReader br = new BufferedReader(new FileReader(userFile))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             while (br.ready()) {
                 result.add(br.readLine());
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+        return result;
+    }
 
-        // Testing file
-        if(result.size() < 5) throw new FileNotFoundException();
-        for (String line: result) {
+    /**
+     * Validates the Array extracted from file provided by user
+     */
+    private void validateUserInput(List<String> userArray) throws FileNotFoundException{
+        if(userArray.size() < 5) throw new FileNotFoundException();
+        for (String line: userArray) {
             if(line.equals("==========")) return;
         }
         throw new FileNotFoundException();
@@ -88,13 +77,12 @@ public class ClippingsLoader {
     /**
      * Separate notes from MyClippings file to list of KindleNote objects
      */
-    private void extractNotes() {
-        List<List<String>> seperatedNotes = new ArrayList<>();
+    private void convertArrayToKindleNotes(List<String> arrayNotes) {
         List<String> note = new ArrayList<>();
 
-        for (int i = 0; i < loadedFile.size() - 1; i++) {
-            if (!loadedFile.get(i).equals("==========")) {
-                note.add(loadedFile.get(i));
+        for (int i = 0; i < arrayNotes.size() - 1; i++) {
+            if (!arrayNotes.get(i).equals("==========")) {
+                note.add(arrayNotes.get(i));
             } else {
                 addNote(note);
                 note.clear();
@@ -139,7 +127,6 @@ public class ClippingsLoader {
     /**
      * Removes BOM character from the text beginning
      */
-
     private String removeUTF8BOM(String s) {
         if (s.startsWith(UTF8_BOM)) {
             s = s.replace(UTF8_BOM,"");

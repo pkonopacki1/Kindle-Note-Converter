@@ -22,13 +22,13 @@ public class ClippingsLoaderTest extends TestCase {
 
     public void testLoadFromFile() {
         try {
-            clippingsLoader.loadFromFile(testFile);
+            clippingsLoader.loadClippingsFromFile(testFile);
         } catch (FileNotFoundException e) {
             fail();
         }
 
         try {
-            clippingsLoader.loadFromFile(testFalseFile);
+            clippingsLoader.loadClippingsFromFile(testFalseFile);
             fail();
         } catch (FileNotFoundException e) {
         }
