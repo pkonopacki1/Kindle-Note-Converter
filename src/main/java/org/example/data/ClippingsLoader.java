@@ -12,7 +12,6 @@ import java.util.Map;
 public class ClippingsLoader {
     public static final ClippingsLoader INSTANCE = new ClippingsLoader();
     private Map<String, List<KindleNote>> booksNotes;
-    private final String UTF8_BOM = "\uFEFF";
 
     private ClippingsLoader() {
         booksNotes = new HashMap<>();
@@ -21,6 +20,7 @@ public class ClippingsLoader {
     /**
      * Load clipping from file
      */
+    // TODO: 23.10.2020 Prevent from adding same notes
     public void loadClippingsFromFile(File file) throws FileNotFoundException {
         List<String> loadedArray = loadArrayFromFile(file);
         validateUserInput(loadedArray);
@@ -31,7 +31,7 @@ public class ClippingsLoader {
         return new ArrayList<>(booksNotes.keySet());
     }
 
-    public List<KindleNote> getnNotes(String title) {
+    public List<KindleNote> getBookNotes(String title) {
         return booksNotes.get(title);
     }
 
@@ -128,6 +128,7 @@ public class ClippingsLoader {
      * Removes BOM character from the text beginning
      */
     private String removeUTF8BOM(String s) {
+        String UTF8_BOM = "\uFEFF";
         if (s.startsWith(UTF8_BOM)) {
             s = s.replace(UTF8_BOM,"");
         }
