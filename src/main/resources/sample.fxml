@@ -6,6 +6,7 @@
 <?import javafx.scene.control.Menu?>
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
@@ -19,7 +20,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <ListView fx:id="bookList" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+            <ListView fx:id="bookList" prefHeight="200.0" prefWidth="300.0" VBox.vgrow="ALWAYS" />
             <Button fx:id="loadNotesBtn" mnemonicParsing="false" text="Load notes" />
          </children>
       </VBox>
@@ -43,7 +44,11 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <VBox fx:id="notesVBox" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" />
+            <ScrollPane>
+               <content>
+                  <VBox fx:id="notesVBox" alignment="TOP_CENTER" prefHeight="298.0" />
+               </content>
+            </ScrollPane>
          </children>
       </VBox>
    </center>

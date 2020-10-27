@@ -59,10 +59,7 @@ public class Controller implements Initializable {
         for (KindleNote note: notes) {
             notesVBox.getChildren().add(createNoteCard(note));
         }
-
     }
-
-    // TODO: 23.10.2020 Fix wrong titledPane size 
     private TitledPane createNoteCard(KindleNote note) {
         TextArea noteArea = new TextArea(note.getNote());
         TitledPane noteCard = new TitledPane(note.getInfo(), noteArea);
@@ -76,7 +73,6 @@ public class Controller implements Initializable {
 
         alert.showAndWait();
     }
-
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         loadNotesBtn.setOnAction(new EventHandler<ActionEvent>() {
