@@ -30,7 +30,6 @@ public class Controller implements Initializable {
     VBox notesVBox;
     @FXML
     Button loadNotesBtn;
-
     Stage stage;
 
     public void loadNotes() {
@@ -53,6 +52,9 @@ public class Controller implements Initializable {
             clippingsLoader.getBooksTitles().forEach(book -> bookList.getItems().add(book));
         }
     }
+
+    // TODO: 27.10.2020
+    //  - Zawijanie tekstu
     private void showBookNotes(String title) {
         List<KindleNote> notes = clippingsLoader.getBookNotes(title);
 
@@ -60,10 +62,19 @@ public class Controller implements Initializable {
             notesVBox.getChildren().add(createNoteCard(note));
         }
     }
+    private void removeBookNotes() {
+        notesVBox.getChildren().clear();
+    }
     private TitledPane createNoteCard(KindleNote note) {
         TextArea noteArea = new TextArea(note.getNote());
         TitledPane noteCard = new TitledPane(note.getInfo(), noteArea);
         return noteCard;
+    }
+
+    // TODO: 27.10.2020
+    //  - Dokończ implementację
+    public void exportAllNotes() {
+
     }
     private void showAlertDialog(String info) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
@@ -79,6 +90,7 @@ public class Controller implements Initializable {
             @Override
             public void handle(ActionEvent event) {
                 if(bookList.getSelectionModel().getSelectedItem() != null) {
+                    removeBookNotes();
                     showBookNotes(bookList.getSelectionModel().getSelectedItem());
                 }
             }

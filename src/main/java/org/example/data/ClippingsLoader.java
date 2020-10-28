@@ -17,9 +17,6 @@ public class ClippingsLoader {
         booksNotes = new HashMap<>();
     }
 
-    /**
-     * Load clipping from file
-     */
     // TODO: 23.10.2020 Prevent from adding same notes
     public void loadClippingsFromFile(File file) throws FileNotFoundException {
         List<String> loadedArray = loadArrayFromFile(file);
@@ -34,11 +31,11 @@ public class ClippingsLoader {
     public List<KindleNote> getBookNotes(String title) {
         return booksNotes.get(title);
     }
-
     public void saveNotes(String title) {
-        Path file = Paths.get(title.concat(".txt"));
+        if(booksNotes.get(title) == null) throw new NullPointerException();
+        String fileName = title.concat(".txt");
 
-        try(BufferedWriter bw = Files.newBufferedWriter(file)) {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
             bw.write(title.concat("\n"));
             bw.write(booksNotes.get(title).get(0).getAuthor().concat("\n"));
 
@@ -50,7 +47,9 @@ public class ClippingsLoader {
             System.err.println(e.getMessage());
         }
     }
+    public void saveNotes() {
 
+    }
     private List<String> loadArrayFromFile(File file) {
         List<String> result = new ArrayList<>();
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
@@ -62,10 +61,6 @@ public class ClippingsLoader {
         }
         return result;
     }
-
-    /**
-     * Validates the Array extracted from file provided by user
-     */
     private void validateUserInput(List<String> userArray) throws FileNotFoundException{
         if(userArray.size() < 5) throw new FileNotFoundException();
         for (String line: userArray) {
@@ -73,7 +68,6 @@ public class ClippingsLoader {
         }
         throw new FileNotFoundException();
     }
-
     /**
      * Separate notes from MyClippings file to list of KindleNote objects
      */

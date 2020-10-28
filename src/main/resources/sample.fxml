@@ -28,11 +28,16 @@
    <top>
       <MenuBar BorderPane.alignment="CENTER">
         <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" onAction="#loadNotes" text="Load file" />
-            </items>
+          <Menu mnemonicParsing="false" text="Load books">
+               <items>
+                  <MenuItem mnemonicParsing="false" onAction="#loadNotes" text="Load" />
+               </items>
           </Menu>
+            <Menu mnemonicParsing="false" text="Export">
+              <items>
+                <MenuItem mnemonicParsing="false" onAction="#exportAllNotes" text="Export notes from all books" />
+              </items>
+            </Menu>
         </menus>
       </MenuBar>
    </top>
@@ -44,7 +49,7 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <ScrollPane>
+            <ScrollPane VBox.vgrow="ALWAYS">
                <content>
                   <VBox fx:id="notesVBox" alignment="TOP_CENTER" prefHeight="298.0" />
                </content>

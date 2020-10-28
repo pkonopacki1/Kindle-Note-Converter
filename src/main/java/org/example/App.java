@@ -20,6 +20,5 @@ public class App extends Application {
         primaryStage.setTitle("Kindle Note Converter");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
-
     }
 }
