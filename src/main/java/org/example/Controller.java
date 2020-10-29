@@ -77,7 +77,7 @@ public class Controller implements Initializable {
         String selectedTile = bookList.getSelectionModel().getSelectedItem();
         if(selectedTile == null) return;
         File file = saveTxtFile(selectedTile);
-        clippingsLoader.saveNotes(selectedTile, file);
+        clippingsLoader.saveOneBookNotes(selectedTile, file);
     }
 
     private File saveTxtFile(String fileTitle) {

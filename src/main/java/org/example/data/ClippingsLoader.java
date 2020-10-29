@@ -1,9 +1,6 @@
 package org.example.data;
 
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -31,12 +28,12 @@ public class ClippingsLoader {
     public List<KindleNote> getBookNotes(String title) {
         return booksNotes.get(title);
     }
-    public void saveNotes(String title, File file) {
+    public void saveOneBookNotes(String title, File file) {
         if(booksNotes.get(title) == null) throw new NullPointerException();
 
         try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(title.concat("\n"));
-            bw.write(booksNotes.get(title).get(0).getAuthor().concat("\n"));
+            bw.write(booksNotes.get(title).get(0).getAuthor().concat("\n\n"));
 
             for (KindleNote s : booksNotes.get(title)) {
                 bw.write(s.getInfo().concat("\n"));
@@ -46,7 +43,10 @@ public class ClippingsLoader {
             System.err.println(e.getMessage());
         }
     }
-    public void saveNotes() {
+
+    // TODO: 29.10.2020
+    //  - Finnish implementation
+    public void saveAllNotes(File file) {
 
     }
     private List<String> loadArrayFromFile(File file) {
