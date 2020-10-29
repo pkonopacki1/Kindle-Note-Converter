@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -67,15 +66,29 @@ public class Controller implements Initializable {
     }
     private TitledPane createNoteCard(KindleNote note) {
         TextArea noteArea = new TextArea(note.getNote());
-        TitledPane noteCard = new TitledPane(note.getInfo(), noteArea);
-        return noteCard;
+        return new TitledPane(note.getInfo(), noteArea);
     }
 
-    // TODO: 27.10.2020
-    //  - Dokończ implementację
     public void exportAllNotes() {
 
     }
+
+    public void exportBookNotes() {
+        String selectedTile = bookList.getSelectionModel().getSelectedItem();
+        if(selectedTile == null) return;
+        File file = saveTxtFile(selectedTile);
+        clippingsLoader.saveNotes(selectedTile, file);
+    }
+
+    private File saveTxtFile(String fileTitle) {
+        stage = (Stage) mainWindow.getScene().getWindow();
+        FileChooser fileChooser = new FileChooser();
+        fileChooser.setTitle("Save file");
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("TXT files", "*.txt"));
+        fileChooser.setInitialFileName(fileTitle.concat(".txt"));
+        return fileChooser.showSaveDialog(stage);
+    }
+
     private void showAlertDialog(String info) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Information Dialog");

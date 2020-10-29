@@ -31,11 +31,10 @@ public class ClippingsLoader {
     public List<KindleNote> getBookNotes(String title) {
         return booksNotes.get(title);
     }
-    public void saveNotes(String title) {
+    public void saveNotes(String title, File file) {
         if(booksNotes.get(title) == null) throw new NullPointerException();
-        String fileName = title.concat(".txt");
 
-        try(BufferedWriter bw = new BufferedWriter(new FileWriter(fileName))) {
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
             bw.write(title.concat("\n"));
             bw.write(booksNotes.get(title).get(0).getAuthor().concat("\n"));
 
