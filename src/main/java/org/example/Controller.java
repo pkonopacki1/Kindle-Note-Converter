@@ -70,14 +70,15 @@ public class Controller implements Initializable {
     }
 
     public void exportAllNotes() {
-
+        File file = saveTxtFile("All notes");
+        if(file != null) clippingsLoader.saveAllNotes(file);
     }
 
     public void exportBookNotes() {
         String selectedTile = bookList.getSelectionModel().getSelectedItem();
         if(selectedTile == null) return;
         File file = saveTxtFile(selectedTile);
-        clippingsLoader.saveOneBookNotes(selectedTile, file);
+        if(file != null) clippingsLoader.saveOneBookNotes(selectedTile, file);
     }
 
     private File saveTxtFile(String fileTitle) {
@@ -99,13 +100,10 @@ public class Controller implements Initializable {
     }
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        loadNotesBtn.setOnAction(new EventHandler<ActionEvent>() {
-            @Override
-            public void handle(ActionEvent event) {
-                if(bookList.getSelectionModel().getSelectedItem() != null) {
-                    removeBookNotes();
-                    showBookNotes(bookList.getSelectionModel().getSelectedItem());
-                }
+        loadNotesBtn.setOnAction(event -> {
+            if(bookList.getSelectionModel().getSelectedItem() != null) {
+                removeBookNotes();
+                showBookNotes(bookList.getSelectionModel().getSelectedItem());
             }
         });
     }

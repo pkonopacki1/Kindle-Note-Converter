@@ -1,10 +1,7 @@
 package org.example.data;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 public class ClippingsLoader {
     public static final ClippingsLoader INSTANCE = new ClippingsLoader();
@@ -47,6 +44,24 @@ public class ClippingsLoader {
     // TODO: 29.10.2020
     //  - Finnish implementation
     public void saveAllNotes(File file) {
+        if(booksNotes.size() == 0) return;
+
+        try(BufferedWriter bw = new BufferedWriter(new FileWriter(file))) {
+            Set<String> titles = booksNotes.keySet();
+
+            for (String title: titles) {
+                bw.write(title.concat("\n"));
+                bw.write(booksNotes.get(title).get(0).getAuthor().concat("\n\n"));
+
+                for (KindleNote s : booksNotes.get(title)) {
+                    bw.write(s.getInfo().concat("\n"));
+                    bw.write(s.getNote().concat("\n\n"));
+                }
+                bw.write("\n----------------------------------------------------------------------\n");
+            }
+        } catch (IOException e) {
+            System.err.println(e.getMessage());
+        }
 
     }
     private List<String> loadArrayFromFile(File file) {
@@ -73,9 +88,9 @@ public class ClippingsLoader {
     private void convertArrayToKindleNotes(List<String> arrayNotes) {
         List<String> note = new ArrayList<>();
 
-        for (int i = 0; i < arrayNotes.size() - 1; i++) {
-            if (!arrayNotes.get(i).equals("==========")) {
-                note.add(arrayNotes.get(i));
+        for (String arrayNote : arrayNotes) {
+            if (!arrayNote.equals("==========")) {
+                note.add(arrayNote);
             } else {
                 addNote(note);
                 note.clear();
