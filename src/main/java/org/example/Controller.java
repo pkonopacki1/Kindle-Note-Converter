@@ -1,7 +1,5 @@
 package org.example;
 
-import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
@@ -48,6 +46,7 @@ public class Controller implements Initializable {
     }
     private void showBookList() {
         if(clippingsLoader.getBooksTitles() != null) {
+            bookList.getItems().clear();
             clippingsLoader.getBooksTitles().forEach(book -> bookList.getItems().add(book));
         }
     }

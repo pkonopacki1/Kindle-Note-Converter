@@ -11,8 +11,8 @@ public class ClippingsLoader {
         booksNotes = new HashMap<>();
     }
 
-    // TODO: 23.10.2020 Prevent from adding same notes
     public void loadClippingsFromFile(File file) throws FileNotFoundException {
+        if (booksNotes.size() > 0) booksNotes.clear();
         List<String> loadedArray = loadArrayFromFile(file);
         validateUserInput(loadedArray);
         convertArrayToKindleNotes(loadedArray);
