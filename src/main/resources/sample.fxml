@@ -11,9 +11,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller">
+<BorderPane fx:id="mainWindow" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="org.example.Controller">
    <left>
-      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+      <VBox alignment="CENTER" prefHeight="200.0" prefWidth="250.0" BorderPane.alignment="CENTER">
          <children>
             <Label text="Book list ">
                <font>
@@ -50,9 +50,9 @@
                   <Font size="30.0" />
                </font>
             </Label>
-            <ScrollPane VBox.vgrow="ALWAYS">
+            <ScrollPane fitToWidth="true" VBox.vgrow="ALWAYS">
                <content>
-                  <VBox fx:id="notesVBox" alignment="TOP_CENTER" prefHeight="298.0" />
+                  <VBox fx:id="notesVBox" alignment="TOP_CENTER" maxWidth="1.7976931348623157E308" />
                </content>
             </ScrollPane>
          </children>

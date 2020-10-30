@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Stage;
@@ -65,7 +66,11 @@ public class Controller implements Initializable {
     }
     private TitledPane createNoteCard(KindleNote note) {
         TextArea noteArea = new TextArea(note.getNote());
-        return new TitledPane(note.getInfo(), noteArea);
+        noteArea.setWrapText(true);
+        TitledPane titledPane = new TitledPane(note.getInfo(), noteArea);
+        titledPane.setMaxHeight(100);
+        titledPane.setPrefWidth(Region.USE_COMPUTED_SIZE);
+        return titledPane;
     }
 
     public void exportAllNotes() {

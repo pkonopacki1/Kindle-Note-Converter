@@ -41,8 +41,6 @@ public class ClippingsLoader {
         }
     }
 
-    // TODO: 29.10.2020
-    //  - Finnish implementation
     public void saveAllNotes(File file) {
         if(booksNotes.size() == 0) return;
 
