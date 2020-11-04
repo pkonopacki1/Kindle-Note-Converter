@@ -52,8 +52,6 @@ public class Controller implements Initializable {
         }
     }
 
-    // TODO: 27.10.2020
-    //  - Zawijanie tekstu
     private void showBookNotes(String title) {
         List<KindleNote> notes = clippingsLoader.getBookNotes(title);
 
