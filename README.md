@@ -7,4 +7,4 @@ This is windows desktop app. Its main functionalities are:
 * Providing books and notes list.
 * Allowing exporting notes for a specific book or for all the books.
 
-![Example usage] (/example.gif)
+! [Example usage] (example.gif)
